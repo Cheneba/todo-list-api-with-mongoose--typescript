@@ -1,21 +1,47 @@
 
 @port = 3000
-@token = your_actual_jwt_or_api_token_here
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGYzZWFiNmI4MjRiYTUyMmYzZWFhMmQiLCJuYW1lIjoiSm9oaHkgVGVzdCIsImlhdCI6MTc2MDgxNTc5OH0.I2IyajCZBtGKXJBSPu92ak4vAQjcUyDKkcMVW8cmatw
 @baseUrl = http://localhost:{{port}}
 
 ###
 GET {{baseUrl}}/  HTTP/1.1
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/home  HTTP/1.1
+Authorization: Bearer {{token}}
+
+###
+POST {{baseUrl}}/register  HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Johhy Test",
+  "email": "test@gmail.com",
+  "password": "pass123"
+}
+
+###
+POST {{baseUrl}}/login  HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "pass123"
+}
 
 ###
 GET {{baseUrl}}/tasks  HTTP/1.1
+Authorization: Bearer {{token}}
 
 ###
 GET {{baseUrl}}/tasks/68f119b6ff015cd3f5e94ce3  HTTP/1.1
+Authorization: Bearer {{token}}
 
 ###
 POST {{baseUrl}}/tasks  HTTP/1.1
 Content-Type: application/json
-# Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 {
   "title": "Sweep the yard",
@@ -29,7 +55,7 @@ Content-Type: application/json
 ###
 PATCH {{baseUrl}}/tasks/68f11a40d3420be518a6b24c  HTTP/1.1
 Content-Type: application/json
-# Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 {
   "title": "Go home",
@@ -42,4 +68,4 @@ Content-Type: application/json
 
 ###
 DELETE {{baseUrl}}/tasks/68f11db93ac227079df1193f  HTTP/1.1
-# Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}

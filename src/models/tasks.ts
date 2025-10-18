@@ -2,7 +2,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 import Joi from "joi";
 
 interface ITask {
-  id: Schema.Types.ObjectId;
+  _id: Schema.Types.ObjectId;
   title: String;
   description: String;
   status: String;
@@ -15,7 +15,7 @@ interface ITask {
 }
 
 const taskSchema = new Schema<ITask>({
-  id: { type: Schema.Types.ObjectId },
+  _id: { type: Schema.Types.ObjectId },
   title: { type: String, required: true },
   description: { type: String, required: false, maxLength: 150 },
   status: {
@@ -34,7 +34,7 @@ const taskSchema = new Schema<ITask>({
 export const Task: Model<ITask> = mongoose.model<ITask>("Task", taskSchema);
 
 export const taskValidator = Joi.object({
-  id: Joi.string(),
+  _id: Joi.string(),
   title: Joi.string().min(4).max(45),
   description: Joi.string().max(150),
   status: Joi.string().valid(

@@ -5,7 +5,6 @@ import EntityNotFoundError from "../errors/EntityNotFoundError";
 export const getAll = async (req: Request, res: Response) => {
   try {
     const tasks = await Task.find({});
-    throw new Error("oops");
     res.json({ count: tasks.length, tasks: tasks });
   } catch (error) {
     let message = "Something went wrong! Try again later.";

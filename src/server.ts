@@ -1,9 +1,11 @@
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
 import env from "./config";
 import { tasks } from "./controllers";
+import { auth } from "./controllers";
+import { authMiddleware } from "./middleware/authMiddleware";
 
 export const createServer = () => {
   const app = express();
@@ -26,11 +28,17 @@ export const createServer = () => {
     res.redirect("/tasks");
   });
 
-  app.get("/tasks", tasks.getAll);
-  app.get("/tasks/:id", tasks.getOne);
-  app.post("/tasks", tasks.create);
-  app.patch("/tasks/:id", tasks.update);
-  app.delete("/tasks/:id", tasks.destroy);
+  // Auth endpoints
+  app.post("/register", auth.register);
+  app.post("/login", auth.login);
+  app.get("/home", authMiddleware, auth.home);
+
+  // Tasks endpoints
+  app.get("/tasks", authMiddleware, tasks.getAll);
+  app.get("/tasks/:id", authMiddleware, tasks.getOne);
+  app.post("/tasks", authMiddleware, tasks.create);
+  app.patch("/tasks/:id", authMiddleware, tasks.update);
+  app.delete("/tasks/:id", authMiddleware, tasks.destroy);
 
   return app;
 };
